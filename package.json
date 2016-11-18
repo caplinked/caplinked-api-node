@@ -1,0 +1,48 @@
+{
+  "name": "caplinked-api-node",
+  "author": "Caplinked <development@caplinked.com>",
+  "version": "1.0.0",
+  "description": "A Caplinked API SDK for Node.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caplinked/caplinked-api-node.git"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "main": "./lib/caplinked-node-sdk.js",
+  "contributors": [
+    {
+      "name": "Arons Lee",
+      "email": "arons@caplinked.com"
+    }
+  ],
+  "keywords": [
+    "caplinked",
+    "api",
+    "secure",
+    "sdk",
+    "client",
+    "client library"
+  ],
+  "dependencies": {
+    "async": "~2.1.2",
+    "merge-options": "0.0.64",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "gh-pages": "^0.11.0",
+    "ink-docstrap": "^1.2.1",
+    "jsdoc": "^3.4.0",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "test": "npm run lint && mocha 'test/*.js'"
+  }
+}
