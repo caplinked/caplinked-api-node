@@ -1,3 +1,3 @@
-var Caplinked = require('./caplinked');
+var Caplinked = require('./caplinked-sdk');
 
 module.exports = Caplinked;

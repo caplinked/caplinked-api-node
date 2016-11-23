@@ -11,7 +11,7 @@
   "engines": {
     "node": ">=0.10"
   },
-  "main": "./lib/caplinked-node-sdk.js",
+  "main": "./src",
   "contributors": [
     {
       "name": "Arons Lee",
@@ -27,14 +27,13 @@
     "client library"
   ],
   "dependencies": {
-    "async": "~2.1.2",
-    "merge-options": "0.0.64",
-    "request": "^2.74.0"
+    "es6-promise": "^3.1.2",
+    "object-merge": "^2.5.1",
+    "superagent": "^1.8.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^6.2.0",
     "gh-pages": "^0.11.0",
     "ink-docstrap": "^1.2.1",
     "jsdoc": "^3.4.0",

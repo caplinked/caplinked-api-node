@@ -1,5 +1,4 @@
 {
-  "extends": "airbnb/legacy",
   "browser": true,
   "node": true,
   "rules": {
