@@ -4,4 +4,5 @@ var CAPLINKED_CONSTANTS = {
   PUT: 'put',
   DELETE: 'delete'
 };
+
 module.exports = CAPLINKED_CONSTANTS;

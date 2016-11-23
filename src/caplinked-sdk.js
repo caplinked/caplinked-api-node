@@ -24,6 +24,7 @@ function Caplinked (config) {
 
   // set API endpoints
   this.folders = require('./resources/folders')(this);
+  // ....
 }
 
 /**

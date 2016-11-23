@@ -12,11 +12,13 @@ function HttpRequest (path, method, queryParams, body, accessToken) {
         resolve(data);
       }
     }
+
     function failure(error) {
       if (reject) {
         reject(error);
       }
     }
+
     function responseHandler(error, response) {
       if (error) {
         failure(response.body);
