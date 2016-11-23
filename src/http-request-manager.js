@@ -1,7 +1,8 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
+var CL_CONSTANTS = require('./caplinked-constants');
 
-function HttpRequest (path, method, body, queryParams, accessToken) {
+function HttpRequest (path, method, queryParams, body, accessToken) {
 
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
@@ -24,10 +25,31 @@ function HttpRequest (path, method, body, queryParams, accessToken) {
       }
     }
 
-    apiRequest = request.get(path).type('application/json');
+    switch(method) {
+      case CL_CONSTANTS.POST:
+        apiRequest = request.post(path);
+        break;
+      case CL_CONSTANTS.PUT:
+        apiRequest = request.put(path);
+        break;
+      case CL_CONSTANTS.DELETE:
+        apiRequest = request.del(path);
+        break;
+      case CL_CONSTANTS.GET:
+        apiRequest = request.get(path);
+        break;
+    }
+
+    if (queryParams) {
+      apiRequest.query(queryParams);
+    }
+    if (body) {
+      apiRequest.send(body);
+    }
+
+    apiRequest.type('application/json');
     apiRequest.set('X-Token', accessToken);
-    apiRequest.query(queryParams);
-    apiRequest.send(body).end(responseHandler);
+    apiRequest.end(responseHandler);
   };
 
   return new Promise(promiseFunction);

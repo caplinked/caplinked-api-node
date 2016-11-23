@@ -1,4 +1,3 @@
-require('./polyfill-object-assign');
 
 /**
  * @class Caplinked
@@ -22,23 +21,25 @@ function Caplinked (config) {
 
   this.sdkVersion = require('../package').version;
   this.config = config;
+
+  // set API endpoints
+  this.folders = require('./resources/folders')(this);
 }
 
 /**
  * Get the SDK version
- * @returns {String} Version
+ * @returns {String} Version of the Caplinked SDK (caplinked-api-node)
  */
 Caplinked.prototype.getSdkVersion = function () {
   return this.sdkVersion;
 };
 
 /**
- * Set the access token used to authenticate requests to the API.
- * @arg {String} token - An access tokens
- * @returns {undefined}
+ * Get the config object
+ * @returns {Object} Config object
  */
-Caplinked.prototype.setToken = function (token) {
-  this.apiToken = token;
+Caplinked.prototype.getConfig = function () {
+  return this.config;
 };
 
 /**
@@ -49,22 +50,38 @@ Caplinked.prototype.getToken = function () {
   return this.apiToken;
 };
 
-Caplinked.prototype.request = function (path, method, body, queryParams) {
-  var request = this.getHttpRequest();
-  var fullPath = this.apiHost + path;
-  return request(fullPath, method, body, queryParams, this.apiToken);
+/**
+ * Set the access token used to authenticate requests to the Caplinked API.
+ * @arg {String} token - An access token
+ * @returns {undefined}
+ */
+Caplinked.prototype.setToken = function (token) {
+  this.apiToken = token;
 };
 
+/**
+ * Invoke API request
+ * @arg {String} path - API resource path
+ * @arg {String} method - HTTP method
+ * @arg {Object} queryParams - Object of query param key pairs
+ * @arg {Object} body - Object of body key pairs
+ * @returns {Object} Request promise
+ */
+Caplinked.prototype.request = function (path, method, queryParams, body) {
+  var request = this.getHttpRequest();
+  var fullPath = this.apiHost + path;
+  return request(fullPath, method, queryParams, body, this.apiToken);
+};
+
+/**
+ * Get Http request object
+ * @returns {Object} Request manager
+ */
 Caplinked.prototype.getHttpRequest = function () {
  if (Caplinked.prototype.httpRequest === undefined) {
     Caplinked.prototype.httpRequest = require('./http-request-manager');
   }
   return Caplinked.prototype.httpRequest;
 };
-
-/**
- * API endpoint routes
- */
-Caplinked.prototype = Object.assign(Caplinked.prototype, require('./resources'));
 
 module.exports = Caplinked;
