@@ -1,4 +1,3 @@
-
 /**
  * @class Caplinked
  * @classdesc Caplinked SDK class

@@ -1,16 +1,5 @@
 var CL_CONSTANTS = require('../caplinked-constants');
-
-function getBasePath(id, param) {
-  var basePath = '/api/v1/folders';
-  id = parseInt(id, 10);
-  if (id >= 0) {
-    basePath += '/' + id;
-    if (param) {
-      basePath += '/' + param;
-    }
-  }
-  return basePath;
-}
+var utils = require('../caplinked-utils');
 
 function Folders (client) {
 
@@ -24,7 +13,7 @@ function Folders (client) {
         name: folderName,
         parent_id: parentId
       };
-      return client.request(getBasePath(), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(utils.path('/api/v1/folders'), CL_CONSTANTS.POST, queryParams, body);
     },
 
     delete: function (workspaceId, folderId) {
@@ -32,7 +21,7 @@ function Folders (client) {
         workspace_id: workspaceId
       };
       var body = null;
-      return client.request(getBasePath(folderId), CL_CONSTANTS.DELETE, queryParams, body);
+      return client.request(utils.path('/api/v1/folders/:id', {':id': folderId}), CL_CONSTANTS.DELETE, queryParams, body);
     },
 
     get: function (workspaceId, folderId) {
@@ -40,7 +29,7 @@ function Folders (client) {
         workspace_id: workspaceId
       };
       var body = null;
-      return client.request(getBasePath(folderId), CL_CONSTANTS.GET, queryParams, body);
+      return client.request(utils.path('/api/v1/folders/:id', {':id': folderId}), CL_CONSTANTS.GET, queryParams, body);
     },
 
     getRootLevel: function (workspaceId) {
@@ -48,7 +37,7 @@ function Folders (client) {
         workspace_id: workspaceId
       };
       var body = null;
-      return client.request(getBasePath(0), CL_CONSTANTS.GET, queryParams, body);
+      return client.request(utils.path('/api/v1/folders/0'), CL_CONSTANTS.GET, queryParams, body);
     },
 
     update: function (workspaceId, folderId, folderName, folderIndex) {
@@ -61,7 +50,7 @@ function Folders (client) {
           index: folderIndex
         }
       };
-      return client.request(getBasePath(folderId), CL_CONSTANTS.PUT, queryParams, body);
+      return client.request(utils.path('/api/v1/folders/:id', {':id': folderId}), CL_CONSTANTS.PUT, queryParams, body);
     },
 
     copy: function (workspaceId, folderId, destinationFolderId) {
@@ -71,7 +60,7 @@ function Folders (client) {
       var body = {
         destination_folder_id: destinationFolderId
       };
-      return client.request(getBasePath(folderId, 'copy'), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(utils.path('/api/v1/folders/:id/copy', {':id': folderId}), CL_CONSTANTS.POST, queryParams, body);
     },
 
     move: function (workspaceId, folderId, destinationFolderId) {
@@ -81,7 +70,7 @@ function Folders (client) {
       var body = {
         destination_folder_id: destinationFolderId
       };
-      return client.request(getBasePath(folderId, 'move'), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(utils.path('/api/v1/folders/:id/move', {':id': folderId}), CL_CONSTANTS.POST, queryParams, body);
     }
 
   };
