@@ -23,7 +23,7 @@ function Caplinked (config) {
 
   // set API endpoints
   this.folders = require('./resources/folders')(this);
-  // ....
+  this.activities = require('./resources/activities')(this);
 }
 
 /**
