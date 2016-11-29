@@ -59,9 +59,11 @@ function Groups (client) {
     addUserToGroup: function (groupId, workspaceId, userId, sendEmail) {
       var body = {
         workspace_id: workspaceId,
-        user_id: userId,
-        send_email: sendEmail
+        user_id: userId
       };
+      if (sendEmail !== null) {
+        body.sendEmail = !!sendEmail;
+      }
       return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/groups/:id/memberships', { ':id': groupId }), null, body);
     },
 
@@ -82,11 +84,13 @@ function Groups (client) {
 
     updateWatermarkSetting: function (groupId, workspaceId, enableWatermark) {
       var body = {
-        workspace_id: workspaceId,
-        group: {
-          watermarking: !!enableWatermark
-        }
+        workspace_id: workspaceId
       };
+      if (enableWatermark !== null) {
+        body.group = {
+          watermarking: !!enableWatermark
+        };
+      }
       return client.request(CL_CONSTANTS.PUT, utils.path('/api/v1/groups/:id/watermarking', { ':id': groupId }), null, body);
     },
 
