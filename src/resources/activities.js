@@ -16,8 +16,7 @@ function Activities (client) {
       if (pagiPerPage) {
         queryParams.per_page = pagiPerPage;
       }
-      var body = null;
-      return client.request(utils.path('/api/v1/activities/workspace/:workspace_id', {':workspace_id': workspaceId}), CL_CONSTANTS.GET, queryParams, body);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/activities/workspace/:workspace_id', {':workspace_id': workspaceId}), queryParams);
     }
 
   };

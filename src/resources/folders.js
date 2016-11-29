@@ -6,71 +6,60 @@ function Folders (client) {
   return {
 
     create: function (workspaceId, folderName, parentId) {
-      var queryParams = {
-        workspace_id: workspaceId
-      };
       var body = {
+        workspace_id: workspaceId,
         name: folderName,
-        parent_id: parentId
+        parent_id: parentId || 0
       };
-      return client.request(utils.path('/api/v1/folders'), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/folders'), null, body);
     },
 
     delete: function (workspaceId, folderId) {
-      var queryParams = {
+      var body = {
         workspace_id: workspaceId
       };
-      var body = null;
-      return client.request(utils.path('/api/v1/folders/:id', {':id': folderId}), CL_CONSTANTS.DELETE, queryParams, body);
+      return client.request(CL_CONSTANTS.DELETE, utils.path('/api/v1/folders/:id', { ':id': folderId }), null, body);
     },
 
     get: function (workspaceId, folderId) {
       var queryParams = {
         workspace_id: workspaceId
       };
-      var body = null;
-      return client.request(utils.path('/api/v1/folders/:id', {':id': folderId}), CL_CONSTANTS.GET, queryParams, body);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/folders/:id', { ':id': folderId }), queryParams);
     },
 
     getRootLevel: function (workspaceId) {
       var queryParams = {
         workspace_id: workspaceId
       };
-      var body = null;
-      return client.request(utils.path('/api/v1/folders/0'), CL_CONSTANTS.GET, queryParams, body);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/folders/0'), queryParams);
     },
 
     update: function (workspaceId, folderId, folderName, folderIndex) {
-      var queryParams = {
-        workspace_id: workspaceId
-      };
       var body = {
+        workspace_id: workspaceId,
         folder: {
           name: folderName,
           index: folderIndex
         }
       };
-      return client.request(utils.path('/api/v1/folders/:id', {':id': folderId}), CL_CONSTANTS.PUT, queryParams, body);
+      return client.request(CL_CONSTANTS.PUT, utils.path('/api/v1/folders/:id', { ':id': folderId }), null, body);
     },
 
     copy: function (workspaceId, folderId, destinationFolderId) {
-      var queryParams = {
-        workspace_id: workspaceId
-      };
       var body = {
+        workspace_id: workspaceId,
         destination_folder_id: destinationFolderId
       };
-      return client.request(utils.path('/api/v1/folders/:id/copy', {':id': folderId}), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/folders/:id/copy', { ':id': folderId }), null, body);
     },
 
     move: function (workspaceId, folderId, destinationFolderId) {
-      var queryParams = {
-        workspace_id: workspaceId
-      };
       var body = {
+        workspace_id: workspaceId,
         destination_folder_id: destinationFolderId
       };
-      return client.request(utils.path('/api/v1/folders/:id/move', {':id': folderId}), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/folders/:id/move', { ':id': folderId }), null, body);
     }
 
   };

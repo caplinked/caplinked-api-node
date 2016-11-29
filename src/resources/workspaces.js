@@ -9,32 +9,30 @@ function Workspaces (client) {
       var queryParams = {
         team_id: teamId
       };
-      return client.request(utils.path('/api/v1/workspaces'), CL_CONSTANTS.GET, queryParams);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/workspaces'), queryParams);
     },
 
     create: function (teamId, workspaceName) {
-      var queryParams = null;
       var body = {
         team_id: teamId,
         workspace: {
           name: workspaceName
         }
       };
-      return client.request(utils.path('/api/v1/workspaces'), CL_CONSTANTS.POST, queryParams, body);
+      return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/workspaces'), null, body);
     },
 
     get: function (workspaceId) {
-      return client.request(utils.path('/api/v1/workspaces/:id', {':id': workspaceId}), CL_CONSTANTS.GET);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/workspaces/:id', { ':id': workspaceId }));
     },
 
     update: function (workspaceId, workspaceName) {
-      var queryParams = null;
       var body = {
         workspace: {
           name: workspaceName
         }
       };
-      return client.request(utils.path('/api/v1/workspaces/:id', {':id': workspaceId}), CL_CONSTANTS.PUT, queryParams, body);
+      return client.request(CL_CONSTANTS.PUT, utils.path('/api/v1/workspaces/:id', {':id': workspaceId}), null, body);
     }
 
   };
