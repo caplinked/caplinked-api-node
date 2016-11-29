@@ -25,9 +25,10 @@ function Caplinked (config) {
   this.config = config;
 
   // set API endpoint resources
-  this.folders = require('./resources/folders')(this);
-  this.activities = require('./resources/activities')(this);
 
+  this.activities = require('./resources/activities')(this);
+  this.files = require('./resources/files')(this);
+  this.folders = require('./resources/folders')(this);
   this.groups = require('./resources/groups')(this);
   this.organizations = require('./resources/organizations')(this);
   this.permissions = require('./resources/permissions')(this);
