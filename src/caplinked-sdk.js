@@ -28,7 +28,7 @@ function Caplinked (config) {
   this.folders = require('./resources/folders')(this);
   this.activities = require('./resources/activities')(this);
 
-
+  this.organizations = require('./resources/organizations')(this);
   this.permissions = require('./resources/permissions')(this);
   this.teams = require('./resources/teams')(this);
   this.users = require('./resources/users')(this);
