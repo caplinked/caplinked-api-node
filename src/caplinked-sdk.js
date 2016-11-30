@@ -1,4 +1,4 @@
-var CL_CONSTANTS = require('./caplinked-constants');
+var httpRequest = require('./http-request');
 
 /**
  * @class Caplinked
@@ -25,7 +25,6 @@ function Caplinked (config) {
   this.config = config;
 
   // set API endpoint resources
-
   this.activities = require('./resources/activities')(this);
   this.downloads = require('./resources/downloads')(this);
   this.files = require('./resources/files')(this);
@@ -80,20 +79,24 @@ Caplinked.prototype.setToken = function (token) {
  * @returns {Object} Request promise
  */
 Caplinked.prototype.request = function (method, path, queryParams, body) {
-  var request = this.getHttpRequestManager();
+  var request = this.getHttpRequest();
   var fullPath = this.apiHost + path;
   return request(fullPath, method, queryParams, body, this.apiToken);
 };
 
 /**
  * Get Http request object
- * @returns {Object} Request manager
+ * @returns {Object} HTTP request object
  */
-Caplinked.prototype.getHttpRequestManager = function () {
- if (Caplinked.prototype.httpRequestManager === undefined) {
-    Caplinked.prototype.httpRequestManager = require('./http-request-manager');
+Caplinked.prototype.getHttpRequest = function () {
+  if (Caplinked.prototype.httpRequest === undefined) {
+    Caplinked.prototype.httpRequest = httpRequest;
   }
-  return Caplinked.prototype.httpRequestManager;
+  return Caplinked.prototype.httpRequest;
+};
+
+Caplinked.prototype.setHttpRequest = function (httpRequest) {
+  Caplinked.prototype.httpRequest = httpRequest;
 };
 
 module.exports = Caplinked;
