@@ -3,6 +3,7 @@ var Promise = require('es6-promise').Promise;
 var CL_CONSTANTS = require('./caplinked-constants');
 
 function HttpRequest (path, method, queryParams, body, accessToken) {
+
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 

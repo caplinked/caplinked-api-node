@@ -8,8 +8,6 @@ var clUtils = require('../src/caplinked-utils');
 
 describe('CaplinkedUtils', function () {
 
-  var cl;
-
   describe('path helper', function () {
     it('can return path uri with no params', function () {
       var uri = clUtils.path('/api/v1/test');
