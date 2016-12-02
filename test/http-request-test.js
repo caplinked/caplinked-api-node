@@ -7,6 +7,7 @@ var HttpRequest = require('../src/http-request');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var assert = chai.assert;
+var expect = chai.expect;
 var should = chai.should();
 var nock = require('nock');
 chai.use(chaiAsPromised);
@@ -64,12 +65,26 @@ describe('HttpRequest', function () {
       .reply(function(uri, requestBody) {
         return [
           403,
-          { error: 'Access Denied' } || {}
+          { error: 'Access Denied' }
         ];
       });
 
     var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token');
-    return apiRequest.should.be.rejectedWith({ error: 'Access Denied' });
+    return apiRequest.should.eventually.be.rejected;
   });
+
+  it('should reject promise and build custom non-api-endpoint error', function () {
+    nock(HOST).get(URI).query({ werd: 'up' })
+      .reply(function(uri, requestBody) {
+        return [
+          404,
+          { nope: 'should not be returned to promise - fake 404' }
+        ];
+      });
+
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token');
+    return apiRequest.should.eventually.be.rejected;
+  });
+
 
 });
