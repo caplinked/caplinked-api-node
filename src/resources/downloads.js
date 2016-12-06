@@ -13,14 +13,14 @@ function Downloads (client) {
       return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/downloads'), null, body);
     },
 
-    getZip: function (workspaceId, downloadId) {
+    downloadZip: function (workspaceId, downloadId) {
       var queryParams = {
         workspace_id: workspaceId
       };
       return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/downloads/:id', { ':id': downloadId }), queryParams, null, { stream_download: true });
     },
 
-    getSingleFile: function (workspaceId, fileId) {
+    downloadSingleFile: function (workspaceId, fileId) {
       var queryParams = {
         workspace_id: workspaceId
       };

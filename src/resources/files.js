@@ -26,7 +26,7 @@ function Files (client) {
       return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/files/:id', { ':id': fileId }), queryParams);
     },
 
-    getFilePageImage: function (workspaceId, fileId, expiringToken) {
+    downloadFilePageImage: function (workspaceId, fileId, expiringToken) {
       var queryParams = {
         workspace_id: workspaceId,
         expiring_token: expiringToken
