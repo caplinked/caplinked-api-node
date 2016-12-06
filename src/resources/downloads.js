@@ -17,8 +17,7 @@ function Downloads (client) {
       var queryParams = {
         workspace_id: workspaceId
       };
-      // TODO content-type binary download
-      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/downloads/:id', { ':id': downloadId }), queryParams);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/downloads/:id', { ':id': downloadId }), queryParams, null, { stream_download: true });
     },
 
     getSingleFile: function (workspaceId, fileId) {

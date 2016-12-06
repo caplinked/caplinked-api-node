@@ -31,8 +31,7 @@ function Files (client) {
         workspace_id: workspaceId,
         expiring_token: expiringToken
       };
-      // TODO - binary, response content type
-      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/files/:id/viewer', { ':id': fileId }), queryParams);
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/files/:id/viewer', { ':id': fileId }), queryParams, null, { stream_image: true });
     },
 
     updateFileInfo: function (workspaceId, fileId, fileSettings) {
