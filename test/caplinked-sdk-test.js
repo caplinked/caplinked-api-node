@@ -52,15 +52,16 @@ describe('CaplinkedSdk', function () {
       cl = new CaplinkedSdk({ 'apiToken': 'clApiToken' });
       var spy = sinon.spy();
       cl.setHttpRequest(spy);
-      cl.request('POST', '/api/v1/test', { query1: 'query1value' }, { body1: 'body1value' });
+      cl.request('POST', '/api/v1/test', { query1: 'query1value' }, { body1: 'body1value' }, { option1: 'option1' });
       assert(spy.calledOnce);
-      assert.deepEqual([
+      assert.deepEqual(spy.getCall(0).args, [
         'https://sandbox.caplinked.com/api/v1/test',
         'POST',
         { query1: 'query1value' },
         { body1: 'body1value' },
-        'clApiToken'
-      ], spy.getCall(0).args);
+        'clApiToken',
+        { option1: 'option1' }
+      ]);
     });
   });
 });

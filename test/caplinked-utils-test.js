@@ -22,4 +22,29 @@ describe('CaplinkedUtils', function () {
     });
   });
 
+  describe('responseErrorBuilder', function () {
+    it('can return error json object', function () {
+      var res = {
+        body: {
+          error: {
+            testError: 'ok'
+          }
+        }
+      };
+      var result = clUtils.responseErrorBuilder({}, res);
+      assert.deepEqual(result, res.body);
+    });
+    it('can build custom error object', function () {
+      var err = { status: 'yeee' };
+      var res = { text: 'werd' };
+      var result = clUtils.responseErrorBuilder(err, res);
+      assert.deepEqual(result, {
+        error: {
+          code: 'yeee',
+          message: 'werd'
+        }
+      });
+    });
+  });
+
 });

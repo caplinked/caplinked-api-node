@@ -1,5 +1,3 @@
-var httpRequest = require('./http-request');
-
 /**
  * @class Caplinked
  * @classdesc Caplinked SDK class
@@ -78,10 +76,10 @@ Caplinked.prototype.setToken = function (token) {
  * @arg {Object} body - Object of body key pairs
  * @returns {Object} Request promise
  */
-Caplinked.prototype.request = function (method, path, queryParams, body) {
+Caplinked.prototype.request = function (method, path, queryParams, body, options) {
   var request = this.getHttpRequest();
   var fullPath = this.apiHost + path;
-  return request(fullPath, method, queryParams, body, this.apiToken);
+  return request(fullPath, method, queryParams, body, this.apiToken, options);
 };
 
 /**
@@ -90,7 +88,7 @@ Caplinked.prototype.request = function (method, path, queryParams, body) {
  */
 Caplinked.prototype.getHttpRequest = function () {
   if (Caplinked.prototype.httpRequest === undefined) {
-    Caplinked.prototype.httpRequest = httpRequest;
+    Caplinked.prototype.httpRequest = require('./http-request');
   }
   return Caplinked.prototype.httpRequest;
 };

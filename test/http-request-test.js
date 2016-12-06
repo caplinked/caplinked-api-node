@@ -45,6 +45,26 @@ describe('HttpRequest', function () {
     return apiRequest.should.eventually.become({ validToken: 'api-token', validContentType: 'application/json' });
   });
 
+  it('sets content-type for png', function () {
+    nock(HOST).get(URI).query({ werd: 'up' })
+      .reply(function(uri, requestBody) {
+        return [ 200, 'IMAGE_DATA' ];
+      });
+
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token', { stream_image: true });
+    return apiRequest.should.eventually.become(new Buffer('IMAGE_DATA', 'binary'));
+  });
+
+  it('sets content-type for zip', function () {
+    nock(HOST).get(URI).query({ werd: 'up' })
+      .reply(function(uri, requestBody) {
+        return [ 200, 'ZIP_DATA' ];
+      });
+
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token', { stream_download: true });
+    return apiRequest.should.eventually.become(new Buffer('ZIP_DATA', 'binary'));
+  });
+
   it('sets query params and request body', function () {
     nock(HOST)
       .post(URI, { werd: 'up' })

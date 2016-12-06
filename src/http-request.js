@@ -1,24 +1,13 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
+var fs = require('fs');
+var mime = require('mime');
+
 var CL_CONSTANTS = require('./caplinked-constants');
-var _ = require('underscore');
+var utils = require('./caplinked-utils');
 
-var buildError = function (err, res) {
-  if (res && res.body && _.isObject(res.body) && res.body.error) {
-    // pass through error obj from API
-    return res.body;
-  } else {
-    // build custom error
-    return {
-      error: {
-        code: err.status || 'UNKNOWN',
-        message: (res ? res.text : null) || err.toString(),
-      }
-    };
-  }
-};
-
-function HttpRequest (path, method, queryParams, body, accessToken) {
+function HttpRequest (path, method, queryParams, body, accessToken, options) {
+  options = options || {};
 
   return new Promise(
 
@@ -58,13 +47,25 @@ function HttpRequest (path, method, queryParams, body, accessToken) {
       if (body) {
         apiRequest.send(body);
       }
+      if (accessToken) {
+        apiRequest.set(CL_CONSTANTS.HEADER_TOKEN, accessToken);
+      }
 
-      apiRequest.type('application/json');
-      apiRequest.set('X-Token', accessToken);
+      if (options.stream_download) {
+        apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_ZIP);
+        apiRequest.parse(utils.responseBinaryParser);
+        apiRequest.buffer(true);
+      } else if (options.stream_image) {
+        apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_PNG);
+        apiRequest.parse(utils.responseBinaryParser);
+        apiRequest.buffer(true);
+      } else {
+        apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_JSON);
+      }
 
       apiRequest.end(function resHandler(err, res) {
         if (err) {
-          failure(buildError(err, res));
+          failure(utils.responseErrorBuilder(err, res));
         } else {
           success(res.body);
         }
