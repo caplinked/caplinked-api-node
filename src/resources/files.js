@@ -26,14 +26,6 @@ function Files (client) {
       return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/files/:id', { ':id': fileId }), queryParams);
     },
 
-    downloadFilePageImage: function (workspaceId, fileId, expiringToken) {
-      var queryParams = {
-        workspace_id: workspaceId,
-        expiring_token: expiringToken
-      };
-      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/files/:id/viewer', { ':id': fileId }), queryParams, null, { stream_image: true });
-    },
-
     updateFileInfo: function (workspaceId, fileId, fileSettings) {
       var body = {
         workspace_id: workspaceId,
