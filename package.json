@@ -1,7 +1,7 @@
 {
   "name": "caplinked-api-node",
   "author": "Caplinked <development@caplinked.com>",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A Caplinked API SDK for Node.js",
   "license": "MIT",
   "repository": {
