@@ -6,13 +6,14 @@ var mime = require('mime');
 var CL_CONSTANTS = require('./caplinked-constants');
 var utils = require('./caplinked-utils');
 
-function HttpRequest (path, method, queryParams, body, accessToken, options) {
+function HttpRequest (path, method, queryParams, body, apiKey, apiSecretKey, apiUserToken, options) {
   options = options || {};
 
   return new Promise(
 
     function httpRequestPromise(resolve, reject) {
       var apiRequest;
+      var headers;
 
       function success(data) {
         if (resolve) {
@@ -47,8 +48,12 @@ function HttpRequest (path, method, queryParams, body, accessToken, options) {
       if (body) {
         apiRequest.send(body);
       }
-      if (accessToken) {
-        apiRequest.set(CL_CONSTANTS.HEADER_TOKEN, accessToken);
+
+      headers = utils.signedRequestHeaders(apiKey, apiSecretKey, apiUserToken, options);
+      if (headers) {
+        for (var headerKey in headers) {
+          apiRequest.set(headerKey, headers[headerKey]);
+        }
       }
 
       apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_JSON);

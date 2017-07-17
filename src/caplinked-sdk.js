@@ -2,8 +2,10 @@
  * @class Caplinked
  * @classdesc Caplinked SDK class
  * @arg {Object} config
- * @arg {String} [config.apiToken] - Access token for making authenticated requests to Caplinked API
+ * @arg {String} [config.apiUserToken] - Access token for making authenticated requests to Caplinked API
  * @arg {String} [config.apiHost] - Caplinked API host
+ * @arg {String} [config.apiKey] - Caplinked API public key
+ * @arg {String} [config.apiSecretKey] - Caplinked API secret key
  */
 function Caplinked (config) {
   config = config || {};
@@ -12,15 +14,25 @@ function Caplinked (config) {
   }
 
   // set config
-  this.apiHost = config.apiHost || 'https://sandbox.caplinked.com';
-  this.apiToken = config.apiToken || '';
+  var apiKey = config.apiKey || false;
+  var apiSecretKey = config.apiSecretKey || false;
 
-  if (!this.apiToken) {
-    throw new Error('Missing config key "token"');
+  this.apiUserToken = config.apiUserToken || false;
+  this.apiHost = config.apiHost || 'https://sandbox.caplinked.com';
+
+  if (!apiKey) {
+    throw new Error('Missing config key "apiKey"');
+  }
+
+  if (!apiSecretKey) {
+    throw new Error('Missing config key "apiSecretKey"');
+  }
+
+  if (!this.apiUserToken) {
+    throw new Error('Missing config key "apiUserToken"');
   }
 
   this.sdkVersion = require('../package').version;
-  this.config = config;
 
   // set API endpoint resources
   this.activities = require('./resources/activities')(this);
@@ -33,6 +45,14 @@ function Caplinked (config) {
   this.teams = require('./resources/teams')(this);
   this.users = require('./resources/users')(this);
   this.workspaces = require('./resources/workspaces')(this);
+
+  this.getApiKey = function() {
+    return apiKey;
+  };
+
+  this.getApiSecretKey = function() {
+    return apiSecretKey;
+  };
 }
 
 /**
@@ -44,28 +64,20 @@ Caplinked.prototype.getSdkVersion = function () {
 };
 
 /**
- * Get the config object
- * @returns {Object} Config object
+ * Get the user API token
+ * @returns {String} User API token
  */
-Caplinked.prototype.getConfig = function () {
-  return this.config;
+Caplinked.prototype.getUserToken = function () {
+  return this.apiUserToken;
 };
 
 /**
- * Get the access token
- * @returns {String} Access token
- */
-Caplinked.prototype.getToken = function () {
-  return this.apiToken;
-};
-
-/**
- * Set the access token used to authenticate requests to the Caplinked API.
+ * Set the user resource API token
  * @arg {String} token - An access token
  * @returns {undefined}
  */
-Caplinked.prototype.setToken = function (token) {
-  this.apiToken = token;
+Caplinked.prototype.setUserToken = function (userToken) {
+  this.apiUserToken = userToken;
 };
 
 /**
@@ -79,7 +91,7 @@ Caplinked.prototype.setToken = function (token) {
 Caplinked.prototype.request = function (method, path, queryParams, body, options) {
   var request = this.getHttpRequest();
   var fullPath = this.apiHost + path;
-  return request(fullPath, method, queryParams, body, this.apiToken, options);
+  return request(fullPath, method, queryParams, body, this.getApiKey(), this.getApiSecretKey(), this.apiUserToken, options);
 };
 
 /**

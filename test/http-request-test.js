@@ -17,7 +17,6 @@ describe('HttpRequest', function () {
   var HOST = 'https://www.example.com';
   var URI = '/test-path';
   var URL = HOST + URI;
-  var TOKEN = 'api-test-token';
 
   afterEach(function () {
     nock.cleanAll();
@@ -26,23 +25,32 @@ describe('HttpRequest', function () {
   it('returns a promise', function () {
     nock(HOST).get(URI).query({ werd: 'up' }).reply(200, { ok: 'yes'});
 
-    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, TOKEN);
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'apikey1', 'apiSecretKey1', 'apiUserToken1');
     assert.equal(apiRequest instanceof Promise, true);
     assert.equal(nock.isDone(), true);
   });
 
-  it('sets X-Token header and content type', function () {
+  it('sets header and content type', function () {
     nock(HOST).get(URI).query({ werd: 'up' })
       .reply(function(uri, requestBody) {
         var result = {
-          validToken: this.req.headers['x-token'] || '',
+          validUserToken: this.req.headers['x-api-user-token'] || '',
+          validKey: this.req.headers['x-api-key'] || '',
+          validSig: this.req.headers['x-api-signature'] ? true : false,
+          validExpDate: this.req.headers['x-api-exp-date'] ? true : false,
           validContentType: this.req.headers['content-type'] || ''
         };
         return [ 200, result ];
       });
 
-    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token');
-    return apiRequest.should.eventually.become({ validToken: 'api-token', validContentType: 'application/json' });
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'apikey1', 'apiSecretKey1', 'apiUserToken1');
+    return apiRequest.should.eventually.become({
+      'validContentType': 'application/json',
+      'validExpDate': true,
+      'validKey': 'apikey1',
+      'validSig': true,
+      'validUserToken': 'apiUserToken1'
+       });
   });
 
   it('sets query params and request body', function () {
@@ -56,7 +64,7 @@ describe('HttpRequest', function () {
         ];
       });
 
-    var apiRequest = HttpRequest(URL, CL_CONSTANTS.POST, { yee: 'yah' }, { werd: 'up' }, 'api-token');
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.POST, { yee: 'yah' }, { werd: 'up' }, 'apikey1', 'apiSecretKey1', 'apiUserToken1');
     return apiRequest.should.eventually.become({ valid: 'query-and-body' });
   });
 
@@ -69,7 +77,7 @@ describe('HttpRequest', function () {
         ];
       });
 
-    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token');
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'apikey1', 'apiSecretKey1', 'apiUserToken1');
     return apiRequest.should.eventually.be.rejected;
   });
 
@@ -82,7 +90,7 @@ describe('HttpRequest', function () {
         ];
       });
 
-    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'api-token');
+    var apiRequest = HttpRequest(URL, CL_CONSTANTS.GET, { werd: 'up' }, null, 'apikey1', 'apiSecretKey1', 'apiUserToken1');
     return apiRequest.should.eventually.be.rejected;
   });
 
