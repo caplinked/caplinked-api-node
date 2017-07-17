@@ -51,17 +51,7 @@ function HttpRequest (path, method, queryParams, body, accessToken, options) {
         apiRequest.set(CL_CONSTANTS.HEADER_TOKEN, accessToken);
       }
 
-      if (options.stream_download) {
-        apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_ZIP);
-        apiRequest.parse(utils.responseBinaryParser);
-        apiRequest.buffer(true);
-      } else if (options.stream_image) {
-        apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_PNG);
-        apiRequest.parse(utils.responseBinaryParser);
-        apiRequest.buffer(true);
-      } else {
-        apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_JSON);
-      }
+      apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_JSON);
 
       apiRequest.end(function resHandler(err, res) {
         if (err) {

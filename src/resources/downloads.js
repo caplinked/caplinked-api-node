@@ -17,7 +17,7 @@ function Downloads (client) {
       var queryParams = {
         workspace_id: workspaceId
       };
-      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/downloads/:id', { ':id': downloadId }), queryParams, null, { stream_download: true });
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/downloads/:id', { ':id': downloadId }), queryParams);
     },
 
     downloadSingleFile: function (workspaceId, fileId) {
