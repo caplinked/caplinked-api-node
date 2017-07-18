@@ -15,7 +15,9 @@ npm install --save caplinked-api-node
 var CaplinkedSDK = require('caplinked-api-node');
 
 var caplinked = new CaplinkedSDK({
-  apiToken: 'SECRET_API_TOKEN',  // required or exception thrown
+  apiUserToken: 'USER_TOKEN',  // required or exception thrown
+  apiKey: 'API_KEY',
+  apiSecretKey: 'API_SECRET_KEY',
   apiHost: 'https://sandbox.caplinked.com'
 });
 
