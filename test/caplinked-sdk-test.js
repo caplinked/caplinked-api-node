@@ -9,57 +9,78 @@ var httpRequest = require('../src/http-request');
 var CL_CONSTANTS = require('../src/caplinked-constants');
 
 describe('CaplinkedSdk', function () {
-
   var cl;
+  var baseConfig;
 
-  describe('api access token', function () {
-    it('can be set in the constructor', function () {
-      cl = new CaplinkedSdk({ 'apiToken': 'clApiToken', 'apiHost': 'https://api.caplinked.com' });
-      assert.equal(cl.getToken(), 'clApiToken');
-    });
-    it('throws an error for empty api token', function () {
+  beforeEach(function() {
+    baseConfig = { 'apiHost': 'https://api.caplinked.com', 'apiUserToken': 'userToken', 'apiKey': 'key', 'apiSecretKey': 'secretKey' };
+  });
+
+  describe('api keys', function () {
+    it('throws an error for empty api key', function () {
       assert.throws(function() {
-        new CaplinkedSdk({ 'apiToken': '', 'apiHost': 'https://api.caplinked.com' });
+          baseConfig.apiKey = '';
+          new CaplinkedSdk(baseConfig);
         },
         Error,
-        'Missing config key "token"'
+        'Missing config key "apiKey"'
       );
     });
-    it('can be changed', function () {
-      cl = new CaplinkedSdk({ 'apiToken': 'clApiToken', 'apiHost': 'https://api.caplinked.com' });
-      assert.equal(cl.getToken(), 'clApiToken');
-      cl.setToken('different-token');
-      assert.equal(cl.getToken(), 'different-token');
+    it('throws an error for empty api secret key', function () {
+      assert.throws(function() {
+          baseConfig.apiSecretKey = '';
+          new CaplinkedSdk(baseConfig);
+        },
+        Error,
+        'Missing config key "apiSecretKey"'
+      );
     });
   });
 
-  describe('config', function () {
+  describe('api user token', function () {
     it('can be set in the constructor', function () {
-      cl = new CaplinkedSdk({ 'apiToken': 'clApiToken', 'foo': 'bar' });
-      assert.deepEqual(cl.getConfig(), { 'apiToken': 'clApiToken', 'foo': 'bar' });
+      cl = new CaplinkedSdk(baseConfig);
+      assert.equal(cl.getUserToken(), 'userToken');
+    });
+    it('throws an error for empty api user token', function () {
+      assert.throws(function() {
+          baseConfig.apiUserToken = '';
+          new CaplinkedSdk(baseConfig);
+        },
+        Error,
+        'Missing config key "apiUserToken"'
+      );
+    });
+    it('can be changed', function () {
+      cl = new CaplinkedSdk(baseConfig);
+      assert.equal(cl.getUserToken(), 'userToken');
+      cl.setUserToken('different-token');
+      assert.equal(cl.getUserToken(), 'different-token');
     });
   });
 
   describe('http request', function () {
     it('can get default request object', function () {
-      cl = new CaplinkedSdk({ 'apiToken': 'clApiToken' });
+      cl = new CaplinkedSdk(baseConfig);
       assert.equal(cl.getHttpRequest(), httpRequest);
     });
   });
 
   describe('request', function () {
     it('invokes http request', function () {
-      cl = new CaplinkedSdk({ 'apiToken': 'clApiToken' });
+      cl = new CaplinkedSdk(baseConfig);
       var spy = sinon.spy();
       cl.setHttpRequest(spy);
       cl.request('POST', '/api/v1/test', { query1: 'query1value' }, { body1: 'body1value' }, { option1: 'option1' });
       assert(spy.calledOnce);
       assert.deepEqual(spy.getCall(0).args, [
-        'https://sandbox.caplinked.com/api/v1/test',
+        'https://api.caplinked.com/api/v1/test',
         'POST',
         { query1: 'query1value' },
         { body1: 'body1value' },
-        'clApiToken',
+        'key',
+        'secretKey',
+        'userToken',
         { option1: 'option1' }
       ]);
     });

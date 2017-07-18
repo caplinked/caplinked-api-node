@@ -1,7 +1,8 @@
 var _ = require('underscore');
 var CL_CONSTANTS = require('./caplinked-constants');
+var CryptoJS = require('crypto-js');
 
-function path (uri, params) {
+function path(uri, params) {
   params = params || {};
   if (_.isEmpty(params)) {
     return uri;
@@ -12,7 +13,7 @@ function path (uri, params) {
   });
 }
 
-function responseErrorBuilder (err, res) {
+function responseErrorBuilder(err, res) {
   if (res && res.body && _.isObject(res.body) && res.body.error) {
     // pass through error obj from API
     return res.body;
@@ -25,6 +26,22 @@ function responseErrorBuilder (err, res) {
       }
     };
   }
+}
+
+function signedRequestHeaders(apiKey, apiSecretKey, apiUserToken, options) {
+  if (!apiKey || !apiSecretKey || !apiUserToken) {
+    return false;
+  }
+  var apiExpDate = Math.floor(Date.now() / 1000) + 600;
+  var payload = apiKey + apiUserToken + apiExpDate;
+  var hash = CryptoJS.HmacSHA256(payload, apiSecretKey);
+  var headers = {
+    'x-api-key': apiKey,
+    'x-api-user-token': apiUserToken,
+    'x-api-signature': 'Method=HMAC-SHA256 Signature=' + hash,
+    'x-api-exp-date': apiExpDate,
+  };
+  return headers;
 }
 
 function responseBinaryParser(res, callback) {
@@ -41,5 +58,6 @@ function responseBinaryParser(res, callback) {
 module.exports = {
   path: path,
   responseErrorBuilder: responseErrorBuilder,
-  responseBinaryParser: responseBinaryParser
+  responseBinaryParser: responseBinaryParser,
+  signedRequestHeaders: signedRequestHeaders
 };

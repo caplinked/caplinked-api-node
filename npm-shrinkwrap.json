@@ -1,6 +1,6 @@
 {
   "name": "caplinked-api-node",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": {
     "async": {
       "version": "1.5.2",
@@ -26,6 +26,11 @@
       "version": "1.0.2",
       "from": "core-util-is@>=1.0.0 <1.1.0",
       "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.2.tgz"
+    },
+    "crypto-js": {
+      "version": "3.1.9-1",
+      "from": "crypto-js@latest",
+      "resolved": "https://registry.npmjs.org/crypto-js/-/crypto-js-3.1.9-1.tgz"
     },
     "debug": {
       "version": "2.3.3",

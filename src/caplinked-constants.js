@@ -4,7 +4,6 @@ var CAPLINKED_CONSTANTS = {
   PUT: 'put',
   DELETE: 'delete',
   RES_UNKNOWN: 'UNKNOWN',
-  HEADER_TOKEN: 'X-Token',
   CONTENT_TYPE_JSON: 'application/json',
   CONTENT_TYPE_ZIP: 'application/zip',
   CONTENT_TYPE_PNG: 'image/png',
