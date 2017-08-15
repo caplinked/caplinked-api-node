@@ -1,7 +1,13 @@
 NodeJS SDK for Caplinked's API
 ===================
 
-A simple JavaScript interface to the [Caplinked API](https://developer.caplinked.com/docs).
+## Overview
+
+NodeJS (Javascript) SDK for the [Caplinked API](https://developer.caplinked.com/).
+
+Core information security endpoints for managing your virtual data room capabilities around files/folders, users/groups and permissions, uploads/downloads, dynamic watermarking, DRM (digital rights management) and more.
+
+Vist [Caplinked](https://www.caplinked.com/data-protection-api/) for more information.
 
 Basic Usage via NodeJS
 -----------
