@@ -5,8 +5,13 @@ function Files (client) {
 
   return {
 
-    upload: function (workspaceId, folderId, fileName) {
-      // TODO - binary
+    upload: function (workspaceId, folderId, fileName, file) {
+      var params = {
+        workspace_id: workspaceId,
+        folder_id: folderId,
+        file_name: fileName
+      };
+      return client.request(CL_CONSTANTS.PUT, utils.path('/api/v1/files/upload'), params, file);
     },
 
     delete: function (workspaceId, fileId) {
