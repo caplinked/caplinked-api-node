@@ -5,6 +5,10 @@ function Teams (client) {
 
   return {
 
+    list: function(){
+      return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/teams'));
+    },
+
     create: function (teamSettings) {
       var body = {
         team: teamSettings
