@@ -50,6 +50,6 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "test": "npm run lint && mocha 'test/*.js'"
+    "test": "npm run lint && mocha 'test/*.js' && mocha 'test/unit/*.js'"
   }
 }
