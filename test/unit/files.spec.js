@@ -9,7 +9,7 @@ var httpRequest = require('./../../src/http-request')
 var CL_CONSTANTS = require('./../../src/caplinked-constants')
 
 describe('Files Component', function () {
-  let client = {
+  var client = {
     request: function (method, path, options, params) {
       return { title: 'File title', meta: true }
     }
@@ -21,5 +21,4 @@ describe('Files Component', function () {
       assert.deepEqual(f.getFileInfo(123, 132, 123), { title: 'File title', meta: true })
     });
   });
-
 });
