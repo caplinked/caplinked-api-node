@@ -1,13 +1,12 @@
 /* eslint-env mocha */
+var chai = require('chai')
+var sinon = require('sinon')
+var assert = chai.assert
 
-let chai = require('chai')
-let sinon = require('sinon')
-let assert = chai.assert
-
-let CapLinkedSDK = require('./../../src/caplinked-sdk')
-let Files = require('./../../src/resources/files.js')
-let httpRequest = require('./../../src/http-request')
-let CL_CONSTANTS = require('./../../src/caplinked-constants')
+var CapLinkedSDK = require('./../../src/caplinked-sdk')
+var Files = require('./../../src/resources/files.js')
+var httpRequest = require('./../../src/http-request')
+var CL_CONSTANTS = require('./../../src/caplinked-constants')
 
 describe('Files Component', function () {
   let client = {
