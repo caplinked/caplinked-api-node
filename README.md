@@ -67,17 +67,17 @@ Available Actions
 Please refer to the approriate wiki page to see a list of the available actions one may make via this SDK. Each action has a corresponding code example.
 Additionally, some wiki pages may contain gotchas or important information not covered here.
 
-[Activites](https://github.com/caplinked/caplinked-api-node/wiki/Activities)
-[Downloads](https://github.com/caplinked/caplinked-api-node/wiki/Downloads)
-[Files](https://github.com/caplinked/caplinked-api-node/wiki/Files)
-[Folders](https://github.com/caplinked/caplinked-api-node/wiki/Folders)
-[Group](https://github.com/caplinked/caplinked-api-node/wiki/Group)
-[Organizations](https://github.com/caplinked/caplinked-api-node/wiki/Organizations)
-[Permissions](https://github.com/caplinked/caplinked-api-node/wiki/Permissions)
-[Team](https://github.com/caplinked/caplinked-api-node/wiki/Team)
-[User](https://github.com/caplinked/caplinked-api-node/wiki/User)
-[Watermark](https://github.com/caplinked/caplinked-api-node/wiki/Watermark)
-[Workspaces](https://github.com/caplinked/caplinked-api-node/wiki/Workspaces)
+- [Activites](https://github.com/caplinked/caplinked-api-node/wiki/Activities)
+- [Downloads](https://github.com/caplinked/caplinked-api-node/wiki/Downloads)
+- [Files](https://github.com/caplinked/caplinked-api-node/wiki/Files)
+- [Folders](https://github.com/caplinked/caplinked-api-node/wiki/Folders)
+- [Group](https://github.com/caplinked/caplinked-api-node/wiki/Group)
+- [Organizations](https://github.com/caplinked/caplinked-api-node/wiki/Organizations)
+- [Permissions](https://github.com/caplinked/caplinked-api-node/wiki/Permissions)
+- [Team](https://github.com/caplinked/caplinked-api-node/wiki/Team)
+- [User](https://github.com/caplinked/caplinked-api-node/wiki/User)
+- [Watermark](https://github.com/caplinked/caplinked-api-node/wiki/Watermark)
+- [Workspaces](https://github.com/caplinked/caplinked-api-node/wiki/Workspaces)
 
 Change Log
 ---------
