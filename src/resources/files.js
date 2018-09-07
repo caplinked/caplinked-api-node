@@ -26,7 +26,7 @@ function Files (client) {
         workspace_id: workspaceId
       };
       if (pageNumber !== null) {
-        queryParams.page_number = parseInt(page_number, 10);
+        queryParams.page_number = parseInt(pageNumber, 10);
       }
       return client.request(CL_CONSTANTS.GET, utils.path('/api/v1/files/:id', { ':id': fileId }), queryParams);
     },
