@@ -1,59 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Home</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Home</h1>
-
-    
+This webiste contains the documentation of the CapLinked Node.js SDK. This information is also mirrored in the [Wiki](https://github.com/caplinked/caplinked-api-node/Wiki/Home)
 
 
+## Requirements
+- Node.js Version 5.12.0 or greater
 
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    <section>
-        <article><p>This webiste contains the documentation of the CapLinked Node.js SDK. This information is also mirrored in the <a href="https://github.com/caplinked/caplinked-api-node/Wiki/Home">Wiki</a></p>
-<h2>Requirements</h2><ul>
-<li>Node.js Version 5.12.0 or greater</li>
-</ul>
-<h2>Installation</h2><pre class="prettyprint source"><code>mkdir app
+## Installation
+```
+mkdir app
 cd app
 npm init // (follow prompts)
 npm install --save caplinked-api-node
 touch index.js
-vim index.js</code></pre><h2>A Working Example</h2><p>In the <code>index.js</code> file</p>
-<pre class="prettyprint source lang-js"><code>
+vim index.js
+```
+
+## A Working Example
+In the `index.js` file
+
+```js
+
 // Require the SDK
 var CaplinkedSDK = require('caplinked-api-node');
 var fs = require('fs');
@@ -221,43 +186,43 @@ var createZipFile = function(ws_id, download_settings) {
 // Now, we chain the promises together to execute each action in the order it needs to be. 
 createTeam
   .then(team_response => {
-    console.log(&quot;=========================================&quot;);
-    console.log(&quot;Team Create Response: &quot;, team_response);
+    console.log("=========================================");
+    console.log("Team Create Response: ", team_response);
     return createWorkspace();
   })
   .then(workspace_response => {
     workspace_id = workspace_response.id;
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('Workspace Create Response: ', workspace_response);
     return createFolder();
   })
   .then(folder_response => {
     folder_id = folder_response.id
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('Folder Create Response: ', folder_response);
-    return uploadFile(&quot;api.png&quot;, &quot;/var/www/api.png&quot;);
+    return uploadFile("api.png", "/var/www/api.png");
   })
   .then(file_upload_response => {
     file_id_1 = file_upload_response.id;
     file_name_1 = file_upload_response.file_name;
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('File Upload Response: ', file_upload_response);
-    return uploadFile(&quot;Thing.pdf&quot;, &quot;/var/www/Thing.pdf&quot;);
+    return uploadFile("Thing.pdf", "/var/www/Thing.pdf");
   })
   .then(file_upload_response_2 => {
     file_id_2 = file_upload_response_2.id;
     file_name_2 = file_upload_response_2.file_name;
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('File Upload 2 Response: ', file_upload_response_2);
     return getFileInfo();
   })
   .then(file_info_response => {
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('File Info Response: ', file_info_response);
     return singleFileDownload(workspace_id, file_id_1);
   })
   .then(single_download_response => {
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('Single File Download Response: ', single_download_response);
 
     var download_settings = {
@@ -268,19 +233,28 @@ createTeam
   })
   .then(zip_create_response => {
     zip_download_id = zip_create_response.id;
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
     console.log('Zip Create Response: ', zip_create_response);
   })
   .catch(error1 => {
     console.log('ERROR:', error1);
   })
   .then(() => {
-    console.log(&quot;\n=========================================&quot;);
+    console.log("\n=========================================");
   });
 
-</code></pre><h2>Running</h2><p>By running <code>node index.js</code> from the base dir of the index file, you will see the output of the actions logged to the console.</p>
-<h2>No Console Logging</h2><p>For a cleaner look, try this. You still must declare the named functions that get executed. I have omitted them in this section to save space and prevent redundancy.</p>
-<pre class="prettyprint source lang-js"><code>
+
+```
+
+## Running
+By running `node index.js` from the base dir of the index file, you will see the output of the actions logged to the console.
+
+## No Console Logging
+
+For a cleaner look, try this. You still must declare the named functions that get executed. I have omitted them in this section to save space and prevent redundancy.
+
+```js
+
 var CaplinkedSDK = require('caplinked-api-node');
 var fs = require('fs');
 
@@ -319,12 +293,12 @@ createTeam
   })
   .then(folder_response => {
     folder_id = folder_response.id
-    return uploadFile(&quot;api.png&quot;, &quot;/var/www/api.png&quot;);
+    return uploadFile("api.png", "/var/www/api.png");
   })
   .then(file_upload_response => {
     file_id_1 = file_upload_response.id;
     file_name_1 = file_upload_response.file_name;
-    return uploadFile(&quot;Thing.pdf&quot;, &quot;/var/www/Thing.pdf&quot;);
+    return uploadFile("Thing.pdf", "/var/www/Thing.pdf");
   })
   .then(file_upload_response_2 => {
     file_id_2 = file_upload_response_2.id;
@@ -341,27 +315,5 @@ createTeam
   .catch(error1 => {
     console.log('ERROR:', error1);
   });
-</code></pre></article>
-    </section>
 
-
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-CapLinkedUtils.html">CapLinkedUtils</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Caplinked.html">Caplinked</a></li><li><a href="HttpRequest.html">HttpRequest</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Sep 11 2018 13:43:27 GMT-0700 (PDT)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>
+```

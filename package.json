@@ -51,6 +51,6 @@
   "scripts": {
     "lint": "eslint src",
     "test": "npm run lint && mocha 'test/*.js' && mocha 'test/unit/*.js'",
-    "jsdoc": "jsdoc ./src ./src/resources -d docs"
+    "jsdoc": "jsdoc --readme ./jsdoc.md ./src ./src/resources -d docs"
   }
 }
