@@ -68,8 +68,8 @@ function HttpRequest (path, method, queryParams, body, apiKey, apiSecretKey, api
           apiRequest.set(headerKey, headers[headerKey]);
         }
       }
-
-      apiRequest.type(CL_CONSTANTS.CONTENT_TYPE_JSON);
+      const { file_name } = queryParams;
+      apiRequest.type(file_name ? mime.lookup(file_name) : CL_CONSTANTS.CONTENT_TYPE_OCTECT_STREAM);
 
       apiRequest.end(function resHandler(err, res) {
         if (err) {
