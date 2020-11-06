@@ -62,7 +62,7 @@ function Groups (client) {
         user_id: userId
       };
       if (sendEmail !== null) {
-        body.sendEmail = !!sendEmail;
+        body.send_email = !!sendEmail;
       }
       return client.request(CL_CONSTANTS.POST, utils.path('/api/v1/groups/:id/memberships', { ':id': groupId }), null, body);
     },
